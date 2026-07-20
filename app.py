@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_migrate import Migrate
 from config import Config
-from models import db, Trip
+from models import db, Trip, Seat
 from routes.operator import operator
 
 app = Flask(__name__)
@@ -40,6 +40,42 @@ def search():
         trips=trips,
         from_city=from_city,
         to_city=to_city
+    )
+
+# view seat
+@app.route("/view-seats/<int:trip_id>")
+def view_seats(trip_id):
+
+    trip = Trip.query.get_or_404(trip_id)
+
+    seats = Seat.query.filter_by(
+        trip_id=trip.id
+    ).all()
+
+    if not seats:
+
+        rows = ["A","B","C","D","E","F","G","H","I","J"]
+
+        for row in rows:
+            for number in range(1,5):
+
+                seat = Seat(
+                    trip_id=trip.id,
+                    seat_number=f"{row}{number}"
+                )
+
+                db.session.add(seat)
+
+        db.session.commit()
+
+        seats = Seat.query.filter_by(
+            trip_id=trip.id
+        ).all()
+
+    return render_template(
+        "view_seats.html",
+        trip=trip,
+        seats=seats
     )
 
 if __name__ == "__main__":

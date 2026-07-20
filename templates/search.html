@@ -49,9 +49,10 @@
                 </div>
 
                 <div class="col-md-2 text-end">
-                    <button class="btn btn-danger">
+                    <a href="{{ url_for('view_seats', trip_id=trip.id) }}"
+                       class="btn btn-danger">
                         View Seats
-                    </button>
+                    </a>
                 </div>
 
             </div>
