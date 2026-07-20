@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_migrate import Migrate
 from config import Config
 from models import db, Trip, Seat
 from routes.operator import operator
 
 app = Flask(__name__)
+
+app.secret_key = "BUSSGO_SECRET_KEY"
 
 # Load Configuration
 app.config.from_object(Config)

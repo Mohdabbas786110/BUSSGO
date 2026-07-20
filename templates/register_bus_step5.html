@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Register Your Bus{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg p-4">
+
+        <h2 class="text-center mb-4">
+            🚌 Register Your Bus
+        </h2>
+
+        <h5 class="mb-4">
+            Step 5 of 5 - Bus Photo
+        </h5>
+
+        <form action="/register-bus/submit"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Upload Bus Photo
+                </label>
+
+                <input
+                    type="file"
+                    name="bus_photo"
+                    class="form-control"
+                    accept="image/*"
+                    required>
+
+            </div>
+
+            <div class="alert alert-info">
+
+                <strong>Review:</strong>
+
+                <ul class="mb-0">
+                    <li>Operator Details ✓</li>
+                    <li>Bus Details ✓</li>
+                    <li>Route & Timing ✓</li>
+                    <li>Driver & Conductor ✓</li>
+                    <li>Bus Photo ✓</li>
+                </ul>
+
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+
+                <a href="/register-bus/step4"
+                   class="btn btn-secondary">
+                    ← Back
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+                    Submit Registration
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
