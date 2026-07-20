@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}BUSSGO{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="container mt-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="display-3 fw-bold text-danger">
+            🚌 BUSSGO
+        </h1>
+
+        <h3 class="mb-3">
+            Private Bus Booking Platform
+        </h3>
+
+        <p class="text-muted">
+            Search • Book • Travel
+        </p>
+
+    </div>
+
+    <!-- Search Card -->
+
+<div class="card shadow-lg p-4">
+
+    <form action="/search" method="GET">
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">From</label>
+
+                <input
+                    type="text"
+                    name="from_city"
+                    class="form-control"
+                    placeholder="Enter Source City"
+                    required>
+
+            </div>
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">To</label>
+
+                <input
+                    type="text"
+                    name="to_city"
+                    class="form-control"
+                    placeholder="Enter Destination City"
+                    required>
+
+            </div>
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">Journey Date</label>
+
+                <input
+                    type="date"
+                    name="journey_date"
+                    class="form-control"
+                    required>
+
+            </div>
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-danger btn-lg w-100 mt-3">
+            🔍 Search Buses
+        </button>
+
+    </form>
+
+</div>
+
+    <!-- Popular Routes -->
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        Popular Routes
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-3 mb-3">
+            <div class="card p-3 text-center">
+                Hallaur → Lucknow
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card p-3 text-center">
+                Lucknow → Ayodhya
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card p-3 text-center">
+                Lucknow → Gorakhpur
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card p-3 text-center">
+                  Basti → Lucknow
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

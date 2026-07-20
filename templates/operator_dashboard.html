@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Operator Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">🚌 Operator Dashboard</h2>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card p-4 shadow text-center">
+
+                <h4>Add Bus</h4>
+
+                <p>Create a new bus.</p>
+
+                <a href="/operator/add-bus" class="btn btn-danger">
+                    Add Bus
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card p-4 shadow text-center">
+
+                <h4>Create Trip</h4>
+
+                <p>Create today's trip.</p>
+
+                <a href="/operator/add-trip" class="btn btn-danger">
+                    Create Trip
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card p-4 shadow text-center">
+
+                <h4>Bookings</h4>
+
+                <p>View all bookings.</p>
+
+                <a href="#" class="btn btn-danger">
+                    View
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

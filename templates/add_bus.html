@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Add Bus{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg p-4">
+
+        <h2 class="mb-4 text-center">
+            🚌 Add New Bus
+        </h2>
+
+        <form>
+
+            <div class="mb-3">
+                <label>Bus Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Abbas Travels"
+                >
+            </div>
+
+            <div class="mb-3">
+                <label>Bus Number</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="UP51AB1234"
+                >
+            </div>
+
+            <div class="mb-3">
+                <label>Bus Type</label>
+
+                <select class="form-select">
+
+                    <option>AC Sleeper</option>
+
+                    <option>Non AC Sleeper</option>
+
+                    <option>Seater</option>
+
+                    <option>Luxury</option>
+
+                </select>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Total Seats</label>
+
+                <input
+                    type="number"
+                    class="form-control"
+                    placeholder="40"
+                >
+
+            </div>
+
+            <button class="btn btn-danger w-100">
+                Save Bus
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
