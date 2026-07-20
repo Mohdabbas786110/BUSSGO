@@ -13,9 +13,12 @@ class Operator(db.Model):
 
     mobile = db.Column(db.String(10), unique=True, nullable=False)
 
-    email = db.Column(db.String(120), unique=True)
-
     address = db.Column(db.Text)
+
+    status = db.Column(
+    db.String(20),
+    default="Pending"
+)
 
     is_verified = db.Column(
         db.Boolean,
