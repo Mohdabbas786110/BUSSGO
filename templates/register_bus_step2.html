@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Register Your Bus{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg p-4">
+
+        <h2 class="text-center mb-4">
+            🚌 Register Your Bus
+        </h2>
+
+        <h5 class="mb-3">
+            Step 2 of 6 - Bus Details
+        </h5>
+
+        <form action="/register-bus/step3" method="POST">
+
+            <div class="mb-3">
+                <label>Bus Name</label>
+                <input
+                    type="text"
+                    name="bus_name"
+                    class="form-control"
+                    placeholder="Abbas Travels AC Sleeper"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label>Bus Number</label>
+                <input
+                    type="text"
+                    name="bus_number"
+                    class="form-control"
+                    placeholder="UP51AB1234"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label>Bus Type</label>
+
+                <select
+                    name="bus_type"
+                    class="form-select"
+                    required>
+
+                    <option value="">Select Bus Type</option>
+                    <option>AC Sleeper</option>
+                    <option>Non AC Sleeper</option>
+                    <option>AC Seater</option>
+                    <option>Non AC Seater</option>
+                    <option>Luxury</option>
+
+                </select>
+
+            </div>
+
+            <div class="mb-3">
+                <label>Total Seats</label>
+                <input
+                    type="number"
+                    name="total_seats"
+                    class="form-control"
+                    placeholder="40"
+                    required>
+            </div>
+
+            <div class="d-flex justify-content-between">
+
+                <a href="/register-bus"
+                   class="btn btn-secondary">
+                    ← Back
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-danger">
+                    Next →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Register Your Bus{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg p-4">
+
+        <h2 class="text-center mb-4">
+            🚌 Register Your Bus
+        </h2>
+
+        <h5 class="mb-3">
+            Step 1 of 6 - Owner Details
+        </h5>
+
+        <form action="/register-bus/step2" method="POST">
+
+            <div class="mb-3">
+                <label>Owner Name</label>
+                <input
+                    type="text"
+                    name="owner_name"
+                    class="form-control"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label>Mobile Number</label>
+                <input
+                    type="text"
+                    name="mobile"
+                    maxlength="10"
+                    class="form-control"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label>Operator / Travels Name</label>
+                <input
+                    type="text"
+                    name="operator_name"
+                    class="form-control"
+                    placeholder="Abbas Travels"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label>Address</label>
+                <textarea
+                    name="address"
+                    class="form-control"
+                    rows="3"
+                    required></textarea>
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-danger w-100">
+                Next →
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
