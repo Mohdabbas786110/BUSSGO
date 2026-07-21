@@ -1,46 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Select Seat{% endblock %}
+
+{% block content %}
+
 <div class="container mt-5">
 
     <div class="card shadow-lg p-4">
 
-        <h2 class="text-center mb-4">
+        <h3 class="text-center mb-2">
             🚌 {{ trip.bus.bus_name }}
-        </h2>
+        </h3>
 
-        <h5 class="text-center mb-4">
-            Select Your Seat
-        </h5>
+        <p class="text-center text-muted">
+            {{ trip.from_city }} → {{ trip.to_city }}
+        </p>
 
-        <div class="text-center mb-4">
-            <strong>🛞 Driver</strong>
+        <!-- Seat Legend -->
+
+        <div class="legend mb-4">
+
+            <div>
+                <span class="available-seat"></span>
+                Available
+            </div>
+
+            <div>
+                <span class="selected-seat"></span>
+                Selected
+            </div>
+
+            <div>
+                <span class="booked-seat"></span>
+                Booked
+            </div>
+
         </div>
 
-        <div class="d-flex flex-wrap justify-content-center">
+        <!-- Bus Body -->
 
-            {% for seat in seats %}
+        <div class="bus-body">
 
-                {% if seat.is_booked %}
+            <div class="seat-layout">
 
-                    <button
-                        class="btn btn-danger m-2"
-                        disabled>
+                <!-- Driver -->
 
-                        {{ seat.seat_number }}
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
 
-                    </button>
+                <div class="driver">
+                    🛞
+                </div>
 
-                {% else %}
+                {% for row in ['A','B','C','D','E','F','G','H','I','J'] %}
 
-                    <button
-                        class="btn btn-outline-success m-2 seat-btn"
-                        data-seat="{{ seat.seat_number }}">
+                    <!-- Left Seats -->
 
-                        {{ seat.seat_number }}
+                    {% for col in [1,2] %}
 
-                    </button>
+                        {% set seat = seats|selectattr('seat_number','equalto',row ~ col)|first %}
 
-                {% endif %}
+                        <div class="seat-box">
 
-            {% endfor %}
+                            {% if seat %}
+
+                                {% if seat.is_booked %}
+
+                                    <button
+                                        class="seat booked"
+                                        disabled>
+
+                                        {{ seat.seat_number }}
+
+                                    </button>
+
+                                {% else %}
+
+                                    <button
+                                        class="seat available seat-btn"
+                                        data-seat="{{ seat.seat_number }}">
+
+                                        {{ seat.seat_number }}
+
+                                    </button>
+
+                                {% endif %}
+
+                                <small>₹{{ trip.fare }}</small>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                    <!-- Aisle -->
+
+                    <div></div>
+
+                    <!-- Right Seats -->
+
+                    {% for col in [3,4] %}
+
+                        {% set seat = seats|selectattr('seat_number','equalto',row ~ col)|first %}
+
+                        <div class="seat-box">
+
+                            {% if seat %}
+
+                                {% if seat.is_booked %}
+
+                                    <button
+                                        class="seat booked"
+                                        disabled>
+
+                                        {{ seat.seat_number }}
+
+                                    </button>
+
+                                {% else %}
+
+                                    <button
+                                        class="seat available seat-btn"
+                                        data-seat="{{ seat.seat_number }}">
+
+                                        {{ seat.seat_number }}
+
+                                    </button>
+
+                                {% endif %}
+
+                                <small>₹{{ trip.fare }}</small>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endfor %}
+
+            </div>
 
         </div>
 
@@ -48,7 +150,7 @@
 
             <button
                 id="continueBtn"
-                class="btn btn-primary btn-lg">
+                class="btn btn-danger btn-lg">
 
                 Continue Booking
 
@@ -59,3 +161,39 @@
     </div>
 
 </div>
+
+<script>
+
+let selectedSeat = null;
+
+document.querySelectorAll(".seat-btn").forEach(btn=>{
+
+    btn.onclick=function(){
+
+        document.querySelectorAll(".seat-btn").forEach(b=>b.classList.remove("selected"));
+
+        this.classList.add("selected");
+
+        selectedSeat=this.dataset.seat;
+
+    }
+
+});
+
+document.getElementById("continueBtn").onclick=function(){
+
+    if(selectedSeat==null){
+
+        alert("Please select a seat.");
+
+        return;
+
+    }
+
+    alert("Selected Seat : "+selectedSeat);
+
+};
+
+</script>
+
+{% endblock %}

@@ -1,15 +1,20 @@
+import os
+
 from flask import Flask, render_template, request, session
 from flask_migrate import Migrate
 from config import Config
 from models import db, Trip, Seat
+from sqlalchemy import func
 from routes.operator import operator
+from datetime import datetime
 
 app = Flask(__name__)
 
-app.secret_key = "BUSSGO_SECRET_KEY"
-
 # Load Configuration
 app.config.from_object(Config)
+
+# Create upload folder automatically
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 # Initialize Database
 db.init_app(app)
@@ -29,19 +34,32 @@ def home():
 @app.route("/search")
 def search():
 
-    from_city = request.args.get("from_city")
-    to_city = request.args.get("to_city")
+    from_city = request.args.get("from_city", "").strip()
+    to_city = request.args.get("to_city", "").strip()
+    journey_date = request.args.get("journey_date", "").strip()
 
-    trips = Trip.query.filter_by(
-        from_city=from_city,
-        to_city=to_city
+    # Agar user ne city select nahi ki
+    if not from_city or not to_city:
+        return render_template(
+            "search.html",
+            trips=[],
+            from_city=from_city,
+            to_city=to_city,
+            journey_date=journey_date
+        )
+
+    # City ke basis par search (case-insensitive)
+    trips = Trip.query.filter(
+        func.lower(Trip.from_city) == from_city.lower(),
+        func.lower(Trip.to_city) == to_city.lower()
     ).all()
 
     return render_template(
         "search.html",
         trips=trips,
         from_city=from_city,
-        to_city=to_city
+        to_city=to_city,
+        journey_date=journey_date
     )
 
 # view seat

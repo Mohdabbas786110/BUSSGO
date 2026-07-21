@@ -44,11 +44,9 @@ class Bus(db.Model):
         db.Text
     )
 
-    # Bus Photos
-    front_photo = db.Column(db.String(255))
-    back_photo = db.Column(db.String(255))
-    left_photo = db.Column(db.String(255))
-    right_photo = db.Column(db.String(255))
+    # Bus Photo
+    bus_photo = db.Column(db.String(255))
+ 
 
     # Approval Status
     status = db.Column(
