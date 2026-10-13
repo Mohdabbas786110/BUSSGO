@@ -1,0 +1,207 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}Create Trip - BUSSGO{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-danger text-white text-center">
+            <h3 class="mb-0">🚌 Create New Trip</h3>
+            <small>BUSSGO Operator Panel</small>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form method="POST">
+
+                <!-- BUS -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Select Bus</label>
+
+                    <select name="bus_id" class="form-select" required>
+
+                        <option value="">-- Select Bus --</option>
+
+                        {% for bus in buses %}
+                        <option value="{{ bus.id }}">
+                            {{ bus.bus_name }} - {{ bus.bus_number }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                    {% if not buses %}
+                    <div class="text-danger mt-2">
+                        No bus available. Please add a bus first.
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- ROUTE -->
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            From City
+                        </label>
+
+                        <input
+                            type="text"
+                            name="from_city"
+                            class="form-control"
+                            placeholder="e.g. Hallaur"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            To City
+                        </label>
+
+                        <input
+                            type="text"
+                            name="to_city"
+                            class="form-control"
+                            placeholder="e.g. Lucknow"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <!-- BOARDING / DROPPING -->
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Boarding Point
+                        </label>
+
+                        <input
+                            type="text"
+                            name="boarding_point"
+                            class="form-control"
+                            placeholder="e.g. Hallaur Bus Stand"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Dropping Point
+                        </label>
+
+                        <input
+                            type="text"
+                            name="dropping_point"
+                            class="form-control"
+                            placeholder="e.g. Alambagh Bus Stand"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <!-- DATE -->
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Journey Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="journey_date"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <!-- TIME -->
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label fw-bold">
+                            Departure Time
+                        </label>
+
+                        <input
+                            type="time"
+                            name="departure_time"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label fw-bold">
+                            Arrival Time
+                        </label>
+
+                        <input
+                            type="time"
+                            name="arrival_time"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+                <!-- FARE -->
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Fare (₹)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="fare"
+                        class="form-control"
+                        placeholder="e.g. 350"
+                        min="1"
+                        required
+                    >
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex gap-2">
+
+                    <button
+                        type="submit"
+                        class="btn btn-danger px-4"
+                    >
+                        ➕ Create Trip
+                    </button>
+
+                    <a
+                        href="{{ url_for('operator.dashboard') }}"
+                        class="btn btn-secondary"
+                    >
+                        ← Back
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+```

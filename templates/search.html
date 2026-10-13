@@ -1,3 +1,4 @@
+```html
 {% extends "base.html" %}
 
 {% block title %}Available Buses{% endblock %}
@@ -6,92 +7,88 @@
 
 <div class="container mt-5">
 
-    <h2 class="mb-4 fw-bold">
-        🚌 Available Buses
-    </h2>
+    <!-- PAGE HEADER -->
+
+    <div class="mb-4">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+                    🚌 Available Buses
+                </h2>
+
+                {% if from_city and to_city %}
+
+                <p class="text-muted mb-0">
+
+                    {{ from_city|title }}
+                    →
+                    {{ to_city|title }}
+
+                    {% if journey_date %}
+                        | 📅 {{ journey_date }}
+                    {% endif %}
+
+                </p>
+
+                {% endif %}
+
+            </div>
+
+            <div class="mt-2">
+
+                <span class="badge bg-dark px-3 py-2">
+                    🤖 AI-Powered Search
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
 
     {% if trips %}
 
-        {% for trip in trips %}
+        <!-- AI INFORMATION -->
 
-        <div class="card shadow mb-4 p-4">
+        <div class="alert alert-light border shadow-sm mb-4">
 
-            <div class="row align-items-center">
+            <div class="d-flex align-items-start">
 
-                <!-- Bus Name -->
-                <div class="col-md-3">
+                <div class="fs-3 me-3">
+                    🤖
+                </div>
 
-                    <h5 class="fw-bold mb-1">
-                        {{ trip.bus.bus_name }}
-                    </h5>
+                <div>
+
+                    <h6 class="fw-bold mb-1">
+                        BUSSGO Smart Recommendation
+                    </h6>
+
+                    <p class="mb-2 text-muted">
+
+                        BUSSGO AI compares
+                        <strong>fare</strong>,
+                        <strong>seat availability</strong>
+                        and
+                        <strong>journey duration</strong>
+                        to recommend the most suitable bus.
+
+                    </p>
 
                     <small class="text-muted">
-                        {{ trip.bus.bus_type }}
+
+                        Weightage:
+                        💰 Fare <strong>40%</strong>
+                        &nbsp; | &nbsp;
+                        💺 Seats <strong>25%</strong>
+                        &nbsp; | &nbsp;
+                        ⏱️ Duration <strong>35%</strong>
+
                     </small>
-
-                    <br>
-
-                    <span class="badge bg-success mt-2">
-                        ★ 4.6
-                    </span>
-
-                </div>
-
-                <!-- Departure -->
-                <div class="col-md-2 text-center">
-
-                    <h4 class="fw-bold">
-                        {{ trip.departure_time.strftime('%H:%M') }}
-                    </h4>
-
-                    <small>{{ trip.from_city }}</small>
-
-                </div>
-
-                <!-- Duration -->
-                <div class="col-md-1 text-center">
-
-                    <small class="text-muted">
-                        5h
-                    </small>
-
-                    <hr>
-
-                    ➜
-
-                </div>
-
-                <!-- Arrival -->
-                <div class="col-md-2 text-center">
-
-                    <h4 class="fw-bold">
-                        {{ trip.arrival_time.strftime('%H:%M') }}
-                    </h4>
-
-                    <small>{{ trip.to_city }}</small>
-
-                </div>
-
-                <!-- Fare -->
-                <div class="col-md-2 text-center">
-
-                    <h3 class="text-danger fw-bold">
-                        ₹{{ trip.fare }}
-                    </h3>
-
-                    <small class="text-success">
-                        Seats Available
-                    </small>
-
-                </div>
-
-                <!-- Button -->
-                <div class="col-md-2 text-end">
-
-                    <a href="{{ url_for('view_seats', trip_id=trip.id) }}"
-                       class="btn btn-danger px-4">
-                        View Seats
-                    </a>
 
                 </div>
 
@@ -99,12 +96,405 @@
 
         </div>
 
+
+        <!-- BUS LIST -->
+
+        {% for trip in trips %}
+
+        <div class="card shadow-sm mb-4 p-4
+            {% if trip.ai_recommended %}
+                border border-3 border-warning
+            {% endif %}">
+
+
+            <!-- AI SCORE -->
+
+            {% if trip.ai_recommended %}
+
+            <div class="mb-3">
+
+                <span class="badge bg-warning text-dark px-3 py-2">
+
+                    🤖 AI Recommended
+
+                </span>
+
+                <span class="badge bg-dark px-3 py-2">
+
+                    AI Score:
+                    {{ trip.ai_score }}/100
+
+                </span>
+
+            </div>
+
+            {% else %}
+
+            <div class="mb-3">
+
+                <span class="badge bg-secondary px-3 py-2">
+
+                    🤖 AI Score:
+                    {{ trip.ai_score }}/100
+
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="row align-items-center">
+
+
+                <!-- BUS INFORMATION -->
+
+                <div class="col-md-3">
+
+                    <h5 class="fw-bold mb-1">
+
+                        {{ trip.bus.bus_name }}
+
+                    </h5>
+
+                    <small class="text-muted">
+
+                        {{ trip.bus.bus_type }}
+
+                    </small>
+
+                    <br>
+
+                    <span class="badge bg-success mt-2">
+
+                        ★ 4.6
+
+                    </span>
+
+                </div>
+
+
+                <!-- DEPARTURE -->
+
+                <div class="col-md-2 text-center">
+
+                    <h4 class="fw-bold">
+
+                        {{ trip.departure_time.strftime('%H:%M') }}
+
+                    </h4>
+
+                    <small>
+
+                        {{ trip.from_city }}
+
+                    </small>
+
+                </div>
+
+
+                <!-- DURATION -->
+
+                <div class="col-md-1 text-center">
+
+                    {% if trip.duration_minutes %}
+
+                        {% set hours =
+                            (trip.duration_minutes // 60)|int
+                        %}
+
+                        {% set minutes =
+                            (trip.duration_minutes % 60)|int
+                        %}
+
+                        <small class="text-muted">
+
+                            {% if hours > 0 %}
+                                {{ hours }}h
+                            {% endif %}
+
+                            {% if minutes > 0 %}
+                                {{ minutes }}m
+                            {% endif %}
+
+                        </small>
+
+                    {% else %}
+
+                        <small class="text-muted">
+                            —
+                        </small>
+
+                    {% endif %}
+
+                    <hr>
+
+                    ➜
+
+                </div>
+
+
+                <!-- ARRIVAL -->
+
+                <div class="col-md-2 text-center">
+
+                    <h4 class="fw-bold">
+
+                        {{ trip.arrival_time.strftime('%H:%M') }}
+
+                    </h4>
+
+                    <small>
+
+                        {{ trip.to_city }}
+
+                    </small>
+
+                </div>
+
+
+                <!-- FARE -->
+
+                <div class="col-md-2 text-center">
+
+                    <h3 class="text-danger fw-bold">
+
+                        ₹{{ trip.fare }}
+
+                    </h3>
+
+                    <small class="text-success">
+
+                        💺 {{ trip.available_seats }}
+                        Seats Available
+
+                    </small>
+
+                </div>
+
+
+                <!-- VIEW SEATS -->
+
+                <div class="col-md-2 text-end">
+
+                    <a
+                        href="{{ url_for('view_seats', trip_id=trip.id) }}"
+                        class="btn btn-danger px-4"
+                    >
+
+                        View Seats
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI RECOMMENDATION DETAILS -->
+
+            {% if trip.ai_recommended %}
+
+            <div class="mt-4 p-4 rounded border bg-light">
+
+                <div class="d-flex align-items-center mb-3">
+
+                    <span class="fs-4 me-2">
+                        🤖
+                    </span>
+
+                    <div>
+
+                        <h5 class="fw-bold mb-0">
+                            AI Recommended Bus
+                        </h5>
+
+                        <small class="text-muted">
+
+                            Best overall option based on
+                            available bus data
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+
+                    <!-- FARE -->
+
+                    <div class="col-md-4 mb-3">
+
+                        <div class="p-3 bg-white rounded border">
+
+                            <div class="fw-bold">
+                                💰 Fare
+                            </div>
+
+                            <div class="mt-1">
+
+                                ₹{{ trip.fare }}
+
+                            </div>
+
+                            <small class="text-muted">
+
+                                Weight: 40%
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SEATS -->
+
+                    <div class="col-md-4 mb-3">
+
+                        <div class="p-3 bg-white rounded border">
+
+                            <div class="fw-bold">
+                                💺 Seat Availability
+                            </div>
+
+                            <div class="mt-1">
+
+                                {{ trip.available_seats }}
+                                seats available
+
+                            </div>
+
+                            <small class="text-muted">
+
+                                Weight: 25%
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DURATION -->
+
+                    <div class="col-md-4 mb-3">
+
+                        <div class="p-3 bg-white rounded border">
+
+                            <div class="fw-bold">
+                                ⏱️ Journey Duration
+                            </div>
+
+                            <div class="mt-1">
+
+                                {% if trip.duration_minutes %}
+
+                                    {% set hours =
+                                        (trip.duration_minutes // 60)|int
+                                    %}
+
+                                    {% set minutes =
+                                        (trip.duration_minutes % 60)|int
+                                    %}
+
+                                    {% if hours > 0 %}
+                                        {{ hours }}h
+                                    {% endif %}
+
+                                    {% if minutes > 0 %}
+                                        {{ minutes }}m
+                                    {% endif %}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </div>
+
+                            <small class="text-muted">
+
+                                Weight: 35%
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FINAL AI SCORE -->
+
+                <div class="mt-2 p-3 bg-white rounded border">
+
+                    <div class="d-flex justify-content-between">
+
+                        <strong>
+                            🧠 Final AI Recommendation Score
+                        </strong>
+
+                        <strong>
+                            {{ trip.ai_score }}/100
+                        </strong>
+
+                    </div>
+
+
+                    <div class="mt-2">
+
+                        <strong>
+                            AI Score: {{ trip.ai_score }}/100
+                        </strong>
+
+                    </div>
+
+
+                    <small class="text-muted d-block mt-2">
+
+                        The bus with the highest overall score
+                        is automatically recommended by BUSSGO AI.
+
+                    </small>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
         {% endfor %}
+
 
     {% else %}
 
-        <div class="alert alert-warning">
-            No buses available for this route.
+        <!-- NO BUS -->
+
+        <div class="alert alert-warning p-4 shadow-sm">
+
+            <h5 class="fw-bold">
+
+                🚌 No buses available
+
+            </h5>
+
+            <p class="mb-0">
+
+                No buses were found for this route.
+
+                Please check the From and To cities.
+
+            </p>
+
         </div>
 
     {% endif %}
@@ -112,3 +502,4 @@
 </div>
 
 {% endblock %}
+```

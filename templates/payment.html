@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Payment - BUSSGO{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-body p-4">
+
+                    <!-- HEADER -->
+
+                    <div class="text-center mb-4">
+
+                        <div style="font-size: 55px;">
+                            💳
+                        </div>
+
+                        <h2 class="fw-bold">
+                            Payment
+                        </h2>
+
+                        <p class="text-muted">
+                            Complete your payment to confirm your booking.
+                        </p>
+
+                    </div>
+
+
+                    <!-- JOURNEY DETAILS -->
+
+                    <div class="alert alert-light border">
+
+                        <h5 class="fw-bold mb-3">
+                            🚌 Journey Details
+                        </h5>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <p class="mb-1">
+                                    <strong>From:</strong>
+                                    {{ trip.from_city }}
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>To:</strong>
+                                    {{ trip.to_city }}
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Date:</strong>
+                                    {{ trip.journey_date }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <p class="mb-1">
+                                    <strong>Departure:</strong>
+                                    {{ trip.departure_time }}
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Boarding:</strong>
+                                    {{ trip.boarding_point }}
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Dropping:</strong>
+                                    {{ trip.dropping_point }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SELECTED SEATS -->
+
+                    <div class="border rounded p-3 mb-4">
+
+                        <h5 class="fw-bold">
+                            💺 Selected Seats
+                        </h5>
+
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+
+                            {% for seat in seats %}
+
+                                <span class="badge bg-danger fs-6 p-2">
+                                    {{ seat.seat_number }}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSENGER -->
+
+                    <div class="border rounded p-3 mb-4">
+
+                        <h5 class="fw-bold">
+                            👤 Passenger Details
+                        </h5>
+
+                        <p class="mb-1">
+                            <strong>Name:</strong>
+                            {{ user.full_name }}
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>Mobile:</strong>
+                            {{ user.mobile }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- PAYMENT METHOD -->
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('process_payment', trip_id=trip.id) }}"
+                    >
+
+                        <h5 class="fw-bold mb-3">
+                            💳 Select Payment Method
+                        </h5>
+
+
+                        <div class="mb-3">
+
+                            <select
+                                name="payment_method"
+                                class="form-select form-select-lg"
+                                required
+                            >
+
+                                <option value="">
+                                    Select Payment Method
+                                </option>
+
+                                <option value="UPI">
+                                    📱 UPI
+                                </option>
+
+                                <option value="Card">
+                                    💳 Debit / Credit Card
+                                </option>
+
+                                <option value="Net Banking">
+                                    🏦 Net Banking
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- DEMO PAYMENT NOTICE -->
+
+                        <div class="alert alert-warning">
+
+                            <strong>⚠ Demo Payment Mode</strong>
+
+                            <br>
+
+                            This is a simulated payment for the
+                            BUSSGO project demonstration.
+
+                            No real money will be deducted.
+
+                        </div>
+
+
+                        <!-- TOTAL -->
+
+                        <div class="bg-light border rounded p-3 mb-4">
+
+                            <div class="d-flex justify-content-between">
+
+                                <span class="fw-bold">
+                                    Total Amount
+                                </span>
+
+                                <span class="fw-bold text-danger fs-4">
+                                    ₹{{ total_fare }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PAY BUTTON -->
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-lg w-100"
+                        >
+
+                            🔒 Pay ₹{{ total_fare }}
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="text-center mt-3">
+
+                        <a
+                            href="{{ url_for('view_seats', trip_id=trip.id) }}"
+                            class="text-muted"
+                        >
+                            ← Change Seats
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

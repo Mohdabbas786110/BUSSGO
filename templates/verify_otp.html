@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Verify OTP - BUSSGO{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-5">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-body p-4">
+
+                    <div class="text-center mb-4">
+
+                        <div style="font-size: 55px;">
+                            🔐
+                        </div>
+
+                        <h2 class="fw-bold">
+                            Verify OTP
+                        </h2>
+
+                        <p class="text-muted">
+                            Enter the 6-digit OTP sent to
+                        </p>
+
+                        <strong>
+                            📱 {{ mobile }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- DEMO OTP -->
+
+                    <div class="alert alert-info text-center">
+
+                        <strong>
+                            🧪 Demo OTP
+                        </strong>
+
+                        <br>
+
+                        <span
+                            style="font-size: 28px; letter-spacing: 6px;"
+                            class="fw-bold"
+                        >
+                            {{ demo_otp }}
+                        </span>
+
+                        <br>
+
+                        <small>
+                            For project demonstration only
+                        </small>
+
+                    </div>
+
+
+                    <!-- OTP FORM -->
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('auth.verify_otp') }}"
+                    >
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+                                Enter OTP
+                            </label>
+
+                            <input
+                                type="text"
+                                name="otp"
+                                class="form-control form-control-lg text-center"
+                                maxlength="6"
+                                minlength="6"
+                                inputmode="numeric"
+                                placeholder="Enter 6-digit OTP"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-lg w-100"
+                        >
+                            🔓 Verify & Login
+                        </button>
+
+                    </form>
+
+
+                    <div class="text-center mt-3">
+
+                        <a
+                            href="{{ url_for('auth.login') }}"
+                            class="text-muted"
+                        >
+                            ← Change Mobile Number
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

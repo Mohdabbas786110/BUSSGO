@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Register - BUSSGO{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-5">
+
+            <div class="card shadow-lg border-0 p-4">
+
+                <div class="text-center mb-4">
+
+                    <div style="font-size: 50px;">
+                        🚌
+                    </div>
+
+                    <h2 class="fw-bold">
+                        Create BUSSGO Account
+                    </h2>
+
+                    <p class="text-muted">
+                        Register to book your bus journey
+                    </p>
+
+                </div>
+
+
+                <form method="POST">
+
+                    <!-- Full Name -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-bold">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            class="form-control form-control-lg"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Mobile -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-bold">
+                            Mobile Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            name="mobile"
+                            class="form-control form-control-lg"
+                            placeholder="Enter 10-digit mobile number"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            required
+                        >
+
+                        <small class="text-muted">
+                            Your mobile number will be used for login.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Register Button -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-danger btn-lg w-100">
+
+                        Create Account
+
+                    </button>
+
+                </form>
+
+
+                <!-- Login Link -->
+
+                <div class="text-center mt-4">
+
+                    <span class="text-muted">
+                        Already have an account?
+                    </span>
+
+                    <a
+                        href="{{ url_for('auth.login') }}"
+                        class="fw-bold text-danger">
+
+                        Login
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
